@@ -1,0 +1,534 @@
+\section{Introduction}
+
+Functions are real by default.
+$X$ is always a normed vector space over $\R$, $J \col X \to \R$ a function.
+The norm of $x \in X$ may be denoted $\n{x}$ as well as $\a{x}$.
+
+\section{Integral functionals}
+
+\begin{definition}
+  Let $x, h \in X$. Consider
+  $$ k \col \ga \mapsto J\p{x + \ga h}. $$
+  The \emph{variation} or \emph{Gateaux derivative} of $J$ at $x$ in the direction $h$ is the real
+  $$ \d J(x; h) = \left.\frac{\d k}{\d \ga} \right|_{\ga = 0}. $$
+  It is also (misleadingly, since it is not linear in $h$) denoted as
+  $$ J'_G(x)h. $$
+\end{definition}
+
+If $J$ is linear, the variation is linear in $h$.
+But this is not generally the case.
+
+For `good' functionals like the following one, it is linear: put
+$$ J(f) = \int g \circ f, $$
+where $X = C\p{\R^m, \R^n}$ and $g \in C^1(\R^n)$.
+Then
+\begin{align*}
+  J(x+ah) &= \int g \circ (x+ah), \\
+  J(x) &= \int g \circ x, \\
+  \int_{t} \frac{g\p{x(t)+ah(t)}-g\p{x(t)}}{a} &\xrightarrow[a \to 0]{} \int_{t} \d g\p{x(t); h(t)}.
+\end{align*}
+
+\begin{remark}
+  Variation is homogenous in $h$, but not necessarily additive.
+\end{remark}
+
+\begin{proof}
+  Homogeneity:
+  \begin{align*}
+    \d J(x; th)
+    & = \lim_{\ga \to 0} \frac{J(x+\ga t h) - J(x)}{\ga} \\
+    & = t \lim_{\gb \to 0} \frac{J(x+\gb h) - J(x)}{\gb}.
+  \end{align*}
+\end{proof}
+
+\begin{definition}
+  The \emph{dual} $X^*$ of $X$ is the set of linear and \textbf{bounded} real functionals on $X$. The \emph{norm} of $\phi \in X^*$ is defined as
+  $$ \n{\phi} = \sup_{x \in X\setminus 0} \frac{\a{\phi(x)}}{\n{x}}. $$
+\end{definition}
+
+\begin{exercise}
+  This is indeed a norm.
+\end{exercise}
+
+\begin{proof}[Solution]
+  Obviously, it is positively homogenous, non-negative, and $\n{0} = 0$.
+  We want to show the triangle inequality:
+  $$ \sup_{x \in X\setminus 0} \frac{\a{\p{a+b}(x)}}{\n{x}} \le \sup_{x \in X\setminus 0} \frac{\a{a(x)}}{\n{x}} + \sup_{x \in X\setminus 0} \frac{\a{b(x)}}{\n{x}}. $$
+  Since $\p{a+b}(x) = a(x)+b(x)$, it follows from the triangle inequality for $\R$ by passing to the supremum.
+\end{proof}
+
+\begin{definition}
+  A sequence $\b{x_n} \ss X$ is called \emph{bounded}, iff $\b{\n{x_n}}$ is bounded.
+\end{definition}
+
+\begin{lemma}
+  In a normed vector space, every Cauchy sequence is bounded.
+\end{lemma}
+
+\begin{proof}
+  Let $\b{x_n}$ be a Cauchy sequence.
+  There is $N$ such $\n{x_n-x_N} \le 1$ for all $n \ge N$.
+  Then $\n{x_n} \le \n{x_N} + 1$ for all these $n$.
+  Hence, for any $m \in \N$,
+  $$ \n{x_m} \le \max \b{\n{x_N}+1, \n{x_{N-1}}, \dots, \n{x_1}}. $$
+\end{proof}
+
+\begin{exercise}
+  $X^*$ is complete.
+\end{exercise}
+
+\begin{proof}[Solution]
+  Let $\b{f_n} \ss X^*$ be a Cauchy sequence.
+  It is bounded, so we may define
+  \begin{align*}
+    a_n &= \inf_{k \ge n} \n{f_n}, &
+    b_n &= \sup_{k \ge n} \n{f_n}.
+  \end{align*}
+  Functions $a_n$ and $b_n$ are non-decreasing and non-increasing, respectively.
+  Moreover, since $f_n$ is Cauchy, $ \a{b_n-a_n} \xrightarrow[]{} 0. $
+  
+  Let $\eps > 0$. Note that
+  $$ \a{\n{f_j} - \n{f_i}} \le \n{f_j - f_i} < \eps $$
+  for sufficiently large $\min \b{i,j}$, so $\b{\n{f_n}}$ is a real Cauchy sequence.
+  It converges as such.
+\end{proof}
+
+\section{Fréchet derivative}
+
+\begin{definition}
+  The functional $J \col X \to \R$ is \emph{differentiable in the sense of Fréchet} at $x$, iff there exists $\phi \in X^*$ such that
+  $$ J(x+h) = J(x) + \phi(h) + o\p{\n{h}} $$
+  with $h \to 0$.
+  In this case we write
+  $$ J'_F(x) = \phi. $$
+\end{definition}
+
+\begin{statement}
+  There exists at most 1 Fréchet derivative.
+\end{statement}
+
+\begin{proof}
+  Suppose there is another, $\phi_2$. Then
+  \begin{align*}
+    \phi(h)-\phi_2(h) = o\p{\n{h}}.
+  \end{align*}
+  Observe that both sides are positively homogenous in $h$.
+  Their relation is then constant, but it also tends to zero.
+\end{proof}
+
+\begin{statement}
+  If Fréchet derivative exists, then the Gateaux derivative for every direction does, and it coincides with the Fréchet one.
+\end{statement}
+
+\begin{proof}
+  Let us find the Gateaux derivative. By definition,
+  \begin{align*}
+    \d J(x; v)
+    &= \lim_{t \to 0} \frac{J\p{x+tv}-J\p{x}}{t} \\
+    &= \lim_{t \to 0} \frac{\phi(tv)+ o\p{\n{tv}}}{t} \\
+    &= \lim_{t \to 0} \frac{t\phi(v)+ \a{t} \cdot o\p{\n{v}}}{t} \\
+    &= \lim_{t \to 0} \p{ \phi(v) + \Sign(t) \cdot o(1) } \\
+    &= \phi(v).
+  \end{align*}
+\end{proof}
+
+\begin{statement}
+  The existence of Gateaux derivative in every direction does not imply existence of Fréchet derivative.
+\end{statement}
+
+\begin{proof}
+  This is for the same reason the existence of directional derivative in every direction does not imply existence of a continuous differential.
+  Consider, for example,
+  $$
+  f(x, y) =
+  \begin{cases}
+    \frac{2xy}{x^2 +y^2}, & (x, y) \ne 0, \\
+    0, & \text{otherwise}.
+  \end{cases}
+  $$
+  In spherical coordinates, we can rewrite it as
+  $$
+  \wh f(r, \ga) =
+  \begin{cases}
+    \sin\p{2\ga}, & r \ne 0, \\
+    0, & \text{otherwise}.
+  \end{cases}
+  $$
+  It is clear from this that the limit of $f$ at $0$ depends on the angle, under which we approach the $0$. Hence it cannot be continuous, not to say differentiable.
+  On the other hand, the derivative $\pd_r \wh f(0, \ga)$ in every direction $\ga$ exists and is equal to zero, as $\sin\p{2\p{\ga+\pi}}=\sin\p{2\ga}$.
+\end{proof}
+
+\begin{definition}
+  We write $J \in C^1(X)$ iff for every $x \in X$ there is $J'_F(x)$ and the map 
+  $$ x \mapsto J'_F(x) $$
+  is continuous.
+\end{definition}
+
+\section{Extrema}
+
+\begin{definition}
+  $x$ is a \emph{local maximum} of $J$, iff there exists such $\gd > 0$ that $J(x) \ge J(x_2)$ for every $x_2 \ne x$ with $\n{x-x_2} < \gd$.
+  We call it \emph{strict}, iff $J(x) > J(x_2)$.
+\end{definition}
+
+\begin{lemma}
+  Let $x$ be a local extremum of $J$, $h \in X$.
+  If $\d J(x; h)$ exists, then $\d J(x; h) = 0$.
+\end{lemma}
+
+\begin{proof}
+  If $\psi(\ga) = J(f+\ga h)$, then $0$ is the local extremum of $\psi$.
+  Then $\psi'(0) = 0.$
+\end{proof}
+
+\begin{definition}
+  $x \in X$ is \emph{stationary} for $J$, iff the limit $\d J(x; h)$ exists and is zero for every $h \in X$.
+\end{definition}
+
+Clearly, stationary points are not necessarily extrema.
+
+\section{Spaces we work with}
+
+\begin{exercise}
+  Put
+  $X = C^1\p{[a, b], \R^n}$ and
+  $$ \n{f} = \max_{x \in [a, b]} \a{f(x)} + \max_{x \in [a, b]}\a{f'(x)}. $$
+  The function $\n{\square} \col X \to \R$ is a norm, and the space $X$ is complete.
+\end{exercise}
+
+\wtf
+
+\begin{definition}
+  The norm from the previous exercise we'll call the \emph{standard $C^1$ norm}.
+\end{definition}
+
+\begin{proposition}
+  If a Cauchy sequence in a normed space has a convergent subsequence, it converges. 
+\end{proposition}
+
+\begin{proof}
+  Let $a_i$ be the Cauchy sequence, $a_{n_i}$ its subsequence that converges to some $a$. Fix $\eps > 0$. Choose $N$ such that $\n{a_j-a_i} < \eps$ and $\n{a_{n_i}-a} < \eps$ for all $i,j > N$. Then
+  \begin{align*}
+    \n{a_i - a}
+    &\le \n{a_i - a_{n_i}} + \n{a_{n_i}-a}
+    < 2\eps.
+  \end{align*}
+\end{proof}
+
+\begin{proposition}
+  Every absolutely convergent series in $X$ converges iff $X$ is complete.
+\end{proposition}
+
+\begin{proof}[Proof of $\Leftarrow$.]
+  Suppose the series $\sum \n{a_i}$ converges.
+  It is a Cauchy sequence, so
+  \begin{align*}
+    \n{\sum_{n=i}^j a_j}
+    \le \sum_{n=i}^j \n{a_j}
+    < \eps
+  \end{align*}
+  for sufficiently large $\min \b{i, j}$.
+  Then the series $\sum a_i$ is Cauchy.
+  Since the space $X$ is Banach, it converges.
+\end{proof}
+
+The converse proof has some thin ice: we need to be careful about how to choose a convergent subsequence.
+
+\begin{proof}[Proof of $\Rightarrow$.]
+  Suppose $a_i$ is a Cauchy sequence.
+  It is sufficient to find a convergent subsequence to show that $a_i$ converges.
+  We construct one, $a_{k_i}$, iteratively.
+  For every $n \in \N$, there exists $m_n$ such that $\n{a_i-a_j} < 1/2^n$ for all $i,j > m_n$.
+  Put $a_{k_1}, a_{k_2}$ to be such that $k_1, k_2 > m_1$, so
+  $$ \n{a_{k_2} - a_{k_1}} < 1/2. $$
+  Suppose $a_{k_i}$ has been build up to $i = 2t$, and for all $j \in \b{2, \dots, t}$ we have
+  \begin{align*}
+    \n{a_{k_{2j}}-a_{k_{2j-1}}} &\le 1/2^{j}, &
+    \n{a_{k_{2j-1}}-a_{k_{2j-2}}} &\le 1/2^{j}.
+  \end{align*}
+  We append another two members. Select $k_{2t+2}, k_{2t+1} > m_{t+1}$, so
+  \begin{align*}
+    \n{a_{k_{2t+2}}-a_{k_{2t+1}}} &< 1/2^{t+1} < 1/2^t, &
+    \n{a_{k_{2t+1}}-a_{k_{2t}}} &< 1/2^{t}.
+  \end{align*}
+  If we sum this, we get less than
+  \begin{align*}
+    \frac{1}{2} + \sum_{j \in \N} \frac{2}{2^j}
+    = 2.5.
+  \end{align*}
+  Then the series $\sum_i \p{a_{k_{i+1}}-a_{k_i}}$ converges absolutely, and so converges (by hypothesis). But this means $a_i$ has a convergent subsequence. Since it is Cauchy, $a_i$ converges as well.
+\end{proof}
+
+\begin{exercise}
+  $X$ together with this norm is complete.
+\end{exercise}
+
+\begin{proof}
+  Let $\b{f_n} \ss X$ be an absolutely convergent series; that is,
+  $$ \sum_{i=1}^n \n{f_i} \xrightarrow[n \to \infty]{} f. $$
+  The original $\b{f_n}$ is a Cauchy sequence, since
+  $$ \n{f_n-f_m} \le  \n{f_n} + \n{f_m} \to 0. $$
+  Therefore, it is sufficient to find a convergent subsequence.
+\end{proof}
+
+\section{Smoothness of integral functionals}
+
+\subsection{$C^0$ integrand implies $C^0$ functional}
+
+\begin{theorem}
+  \label{continuous integrand implies continuous functional}
+  Let $L \in C^0\p{[a, b] \times \R^{2n}} = X$, where the norm is standard $C^1$; $J \col X \to \R$ is defined as s
+  $$ J \col y \mapsto \int_{x=a}^b L\p{x, y(x), y'(x)}. $$
+  Then $J$ is continuous.  
+\end{theorem}
+
+\begin{proof}
+  We will check continuity at $y_0 \in X$. By compactness of $[a, b]$, for some $R_0, R_1 \in \R$ hold inequalities $\a{y_0(x)} \le R_0$, $\a{y_0'(x)} \le R_1$ on $[a, b]$.
+  Let $B \ss \R^n$ be the closed ball of radius $R_0 +1$ with centre at $0$.
+  The $L$ is continuous on $[a, b] \times {B}^2$,
+  so uniformly continuous:
+  $\fa \eps > 0\ \ex \gd \in (0, 1)$ such that, if
+  $$ \a{x_1 - x_2} < \gd, \a{y_1-y_2} < \gd, \a{v_1-v_2} < \gd, $$
+  then
+  $$ \a{L(x_1, y_1, v_1) - L(x_2, y_2, v_2)} < \frac{\eps}{b-a}. $$
+  If
+  $$ \n{y-y_0} < \gd, $$
+  then
+  $$ \a{J(y) - J(y_0)} \le \int_{x=a}^b \a{L(x, y(x), y'(x)) - L(x, y_0(x), y_0'(x)) } < \eps. $$
+  That is, $J$ is continuous.
+\end{proof}
+
+\subsection{$C^1$ integrand implies $C^1$ functional}
+
+\begin{theorem}
+  \label{good functionals are Fréchet differentiable}
+  Let $L \in C^1\p{[a, b] \times \R^{2n}}$ and $J(y) = \int_{x=a}^b L(x, y(x), y'(x))$. Then $J \in C^1(X)$, and the variation can be found by the formula
+  $$ \d J(y; h) = \int_{x=a}^b \i{\nabla_y L\p{x, y(x), y'(x)}, h(x)} + \i{\nabla_v L\p{x, y(x), y'(x)}, h'(x)}. $$
+\end{theorem}
+
+We start with proving the most immediate conclusion:
+
+\begin{lemma}
+  In the conditions of the theorem, if the formula for $\d J(y; h)$ is true, then the map
+  $$ y \mapsto \d J(y) $$
+  is continuous in the topology of the standard $C^1$ norm.
+\end{lemma}
+
+\begin{proof}
+  In the given formula for $\d J(\s)$, the integrand is continuous in $x, y, y'$, since $L$ is continuously differentiable. Therefore, we may apply the theorem on page \pageref{continuous integrand implies continuous functional}, which says that $\d J(\s)$ must be continuous in this case. 
+\end{proof}
+
+Now the formula.
+
+\begin{proof}[Proof of the theorem.]
+  Since the integrand $L$ is $C^1$, we may use the Taylor's formula:
+  $$ L(x, y+\gd_y, v + \gd_v)
+  = L(x, y, v) + \i{\nabla_y L, \gd_y} + \i{\nabla_v L, \gd_v} + o\p{\a{\gd_y}+\a{\gd_v}}. $$
+  Then
+  \begin{align*}
+    J(y+\gd_y)
+    &= \int_{x=a}^b L\p{x, y+\gd_y, y'+\gd_y'} \\
+    &= J(y) + \ub{\int_{x=a}^b \p{\i{\nabla_yL, \gd_y} + \i{\nabla_v L, \gd_y'}}}_{\text{Denote this $\phi\p{\gd_y}$.}}\mathrel{+}o\p{\n{\gd_y}}.
+  \end{align*}
+  Here, the
+  $$ \int_{x=a}^b o\p{\a{\gd_y}+\a{\gd_y'}} $$
+  turns
+  $$ o\p{\n{\gd_y}} $$ after we use the principal estimate for integrals. Observe that the function $\phi$, defined right underneath the expression for $J(y+\gd_y)$, is linear. It is also bounded with
+  $$ O\p{\a{\gd_y}+\a{\gd_y'}} $$
+  by CBS, compactness of $[a, b]$, and the fact that $L \in C^1$. Therefore, $\phi \in X^*$. This means $\phi$ is the Fréchet differential of $J$. Continuity of $\d J(\s)$ has been shown in the preceding lemma. 
+\end{proof}
+
+\section{A few lemmas}
+
+\subsection{Lagrange's lemma}
+
+\begin{lemma}[Lagrange]
+  Let $\Omega \ss \R^n$ be open, $f \in L^1\p{\Omega}$. Equivalent are:
+  \begin{enumerate}
+    \item $f \equiv 0$.
+    \item For all $h \in C^\infty_{cs}(\Omega)$, $\int_\Omega fh = 0$.
+  \end{enumerate}
+\end{lemma}
+
+\begin{proof}
+  Suppose first that $f$ is continuous. $f$ is nonzero on an open ball $B$ of radius $r$ with centre at $x_0$. Then the function
+  $$
+  h(x) = 
+  \begin{cases}
+    \exp{\frac{1}{\a{x-x_0}^2-r^2}}, & x \in B, \\
+    0, & x \not \in B,
+  \end{cases}
+  $$
+  contradicts the second condition: when $x$ tends to the boundary of the ball from the inside, the argument of $\exp$ is a large negative number; on the boundary it is zero.
+  
+  In the general case, recall that $C\p{\Omega}$ is dense in $L^1(\Omega)$, so there is sequence $\b{f_n}$ of continuous functions like in the previous paragraph that converges to $f$ in the $L^1$ norm. Then
+  \begin{align*}
+    \a{\int \p{fh - f_nh}}
+    &\le \int \a{f-f_n} \a{h} \\
+    &\le \sup_\Omega \a{h} \cdot \int \a{f-f_n} \\
+    &\xrightarrow[\n{f-f_n}_1\to 0]{} 0.
+  \end{align*}
+  Hence the limit integral must be nonzero as well.
+\end{proof}
+
+\subsection{Lemma of Dubois and Raymond}
+
+\begin{lemma}[Dubois-Raymond]
+  Let $g \in C\p{\q{a,b}, \R^n}$.
+  Equivalent are
+  \begin{enumerate}
+    \item $g$ is constant.
+    \item For every $h \in C^1\p{[a, b], \R^n}$ such that $h(a) = h(b) = 0$, we have
+    $$ \int_a^b \i{g, h'} = 0. $$
+  \end{enumerate}
+\end{lemma}
+
+\begin{proof}[Proof of $1 \Rightarrow 2$.]
+  By the Newton-Leibniz formula.
+\end{proof}
+
+\begin{proof}[Proof of $2 \Rightarrow 1$.]
+  Put
+  $$ c = \frac{1}{b-a} \int_a^b g. $$
+  We assert $g \equiv c$.
+  To see this, first contrive a function
+  $$ h(x) = \int_{a}^x \p{g - c}. $$
+  Then $h \in C^1$ and $h(a) = h(b) = 0$, so we may apply the hypothesis:
+  $$ \int_a^b \i{g, h'} = 0. $$
+  Observe that
+  \begin{align*}
+    \int_a^b \i{c, h'} = 0.
+  \end{align*}
+  Subtracting the last two equations, we get
+  \begin{align*}
+    0
+    &= \int_a^b \i{g-c, h'} \\
+    &= \int_a^b \i{g-c, g-c} \\
+    &= \int_a^b \i{g, g}.
+  \end{align*}
+  But then the function $g$ must be zero by the previous lemma.
+\end{proof}
+
+\begin{lemma}
+  The previous lemma is also true when $g \in L^1[a, b]$.
+\end{lemma}
+
+\begin{proof}
+    In the general case ($g$ might be discontinuous, but $L^1$), recall again that continuous functions are dense in $L^1$.
+  Let $g_n \xrightarrow[n\to\infty]{} g$ be a sequence of continuous functions. Estimating in the same manner as in the previous theorem (this time using the CBS), we obtain the desired.
+\end{proof}
+
+\subsubsection{A generalisation}
+
+\begin{lemma}[Dubois-Raymond extended]
+  Let $g \in L^1\q{a,b}$, $k \in \N$.
+  Equivalent are
+  \begin{enumerate}
+    \item $g$ is a polynomial of degree $k-1$.
+    \item For every $h \in C^k[a, b]$ such that
+      $$ h(a) = h(b) = \dots = h^{(k-1)}(a) = h^{(k-1)}(b) = 0, $$
+      we have
+      $$ \int_a^b gh^{(k)} = 0. $$
+  \end{enumerate}
+\end{lemma}
+
+\begin{proof}[Proof of $1 \Rightarrow 2$.]
+  By induction on $k$. The base $k = 1$ is the Dubois-Raymond.
+  \begin{align*}
+    \int_a^b gh^{(k)}
+    &= \diff{g'h^{(k-1)}}_a^b - \int_a^b gh^{(k-1)} \\
+    &= 0.
+  \end{align*}
+\end{proof}
+
+\begin{proof}[Proof of $2 \Rightarrow 1$.]
+  By induction on $k$. The base $k = 1$ is the Dubois-Raymond.
+
+  Suppose $g \in C^1[a, b]$. Then
+  \begin{align*}
+    \int_a^b gh^{(k)}
+    &= \diff{gh^{(k-1)}}_a^b - \int_a^b g'h^{(k-1)} \\
+    &= -\int_a^b g'h'.
+  \end{align*}
+  $h' \in C^{k-1}[a, b]$ is, in fact, any; so the result for this case follows by induction.
+  In the general case, observe that we again can approximate with $C^\infty[a, b]$ functions $g_n \xrightarrow[]{L^1} g$:
+  \begin{align*}
+    \a{\int_a^b \p{g-g_n} h^{(k)}}
+    &\le \int_a^b \a{g-g_n} \a{h^{(k)}} \\
+    &\le \max_{[a, b]} \a{h^{(k)}} \cdot \int_a^b \a{g-g_n} \\
+    &\xrightarrow[n \to \infty]{} 0.
+  \end{align*}
+\end{proof}
+
+\begin{lemma}
+  \label{DR for inner product}
+  The previous lemma is still true if we take $g \in C^k\p{[a, b], \R^n}$ and interpret the product of vectors in $\R^n$ as the standard inner product.
+\end{lemma}
+
+\begin{idea}
+  The proof is the same, but we'll have to use the CBS.
+\end{idea}
+
+\section{Optimisation with fixed endpoints}
+
+\begin{definition}[reminder]
+  Let $G \ss \R^m$, $H \ss \R^n$. $C^k(G, H)$ is the set of functions $f \col G \to \R$ such that there exists a function $\wh f \in C^k(\R^m, \R^n)$ with $\wh f|_G = f$.
+\end{definition}
+
+\begin{theorem}[the Euler-Lagrange equation]
+  Let $L \in C^1\p{[a, b]\times \R^{2n}}$, $J(y) = \int_{x=a}^b L(x, y(x), y'(x))$. Let $y_0$ be a local extremum of $J$ on the set
+  $$ Y_1 = \b{y \in C^1\p{[a, b], \R^n} \mid y(a)=A,\ y(b)=B}, $$
+  where $A, B \in \R^n$.
+  Then
+  $$
+  \p{x \mapsto \pd_3 L\p{x, y_0(x), y_0'(x)}}'
+  = \p{ x \mapsto \pd_2 L\p{x,y_0(x),y_0'(x)} } $$
+  (in particular, the derivative on the left exists).
+\end{theorem}
+
+This is a common feature of many variational problems: the optimal function is in some way better than the functions from the consideration domain.
+
+\begin{proof}
+  By the theorem on page \pageref{good functionals are Fréchet differentiable}, the functional $J$ has a Fréchet differential $\d J$, and is, in particular, differentiable in the sense of Gateaux in every direction.
+  By the same theorem,
+  $$ \d J(y; h) = \int_{x=a}^b \i{\nabla_y L(x, y, y'), h(x)} + \i{\nabla_v L(x, y, y'), h'(x)}. $$
+    Fix $h \in C^1\p{[a, b], \R^n}$ with $h(a) = h(b) = 0$.
+  Since the function $y_0$ is a local extremum,
+  $$ \d J(y_0; h) = 0 $$
+  (we rely on $h$ having ends in zero).
+  Put
+  $$ G(x) = \int_{t=a}^x  \nabla_y L(t, y(t), y'(t)). $$
+  Using integration by parts, we obtain
+  \begin{align*}
+    0
+    &=\int_{x=a}^b \i{\nabla_y L(x, y, y'), h(x)} + \i{\nabla_v L(x, y, y'), h'(x)} \\
+    &= \diff{\i{G, h}}_a^b + \int_{x=a}^b -\i{G(x), h'(x)} + \i{\nabla_v L(x, y, y'), h'(x)} \\
+    &= \int_{x=a}^b \i{-G(x)+\nabla_v L(x, y, y'), h'(x)}.
+  \end{align*}
+  From the lemma on page \pageref{DR for inner product} we obtain that
+  $$ \p{x \mapsto -G(x)+\nabla_v L(x, y(x), y'(x))} = \const. $$
+  Since $G \in C^1$, the function $\nabla_3L \in C^1$, and
+  $$
+  \p{x \mapsto \pd_3 L\p{x, y_0(x), y_0'(x)}}' = G'
+  = \p{ x \mapsto \pd_2 L\p{x,y_0(x),y_0'(x)} }. $$
+\end{proof}
+
+\subsection{Smoothness of solutions}
+
+\begin{remark}
+  While the differential equation is of degree 2, the solution $y_0$ is not necessarily $C^2$.  
+\end{remark}
+
+\begin{proof}
+  Consider, for example, $L(x, y, v) = y^2(v-2x)^2$ on $[a, b] = [-1, 1]$.
+  It can be shown that
+  $$ y_0(x) = 
+  \begin{cases}
+    0, & x < 0, \\
+    x^2, & x\ge 0
+  \end{cases}
+  $$
+  is an extremum, satisfies the boundary conditions $\b{y(1) = 1,\ y(0) = -1}$, and $J(y)=0$. Nevertheless, $y_0$ has no second derivative at 0.
+\end{proof}
+
+{\footnotesize Here two theorems were skipped due to the difficulty in typesetting all the formulas. One of them is concerned with conditions, upon which $y_0 \in C^2$; the other shows that the $\nabla_vL = 0$ at the ends of the interval, when the values of $y$ on them are not fixed.}
