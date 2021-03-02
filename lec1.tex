@@ -4,6 +4,18 @@ Functions are real by default.
 $X$ is always a normed vector space over $\R$, $J \col X \to \R$ a function.
 The norm of $x \in X$ may be denoted $\n{x}$ as well as $\a{x}$.
 
+\begin{definition}[reminder]
+  Let $K \in \b{\R, \C}$. A \emph{norm} on a vector space $X$ over $K$ is a function $f \col X \to \R$ that satisfies the following requirements:
+  \begin{enumerate}
+    \item $f(0) = 0$.
+    \item If $x \in X \sm \b{0}$, then $f(x) > 0$.
+    \item If $k \in K$ and $x \in X$, then
+    $$ f(kx) = \a{k} f(x). $$
+    \item If $x_1, x_2 \in X$, then
+    $$ f(x_1+x_2) \le f(x_1)+f(x_2). $$
+  \end{enumerate}
+\end{definition}
+
 \section{Integral functionals}
 
 \begin{definition}
@@ -40,6 +52,8 @@ Then
     & = t \lim_{\gb \to 0} \frac{J(x+\gb h) - J(x)}{\gb}.
   \end{align*}
 \end{proof}
+
+\wtf
 
 \begin{definition}
   The \emph{dual} $X^*$ of $X$ is the set of linear and \textbf{bounded} real functionals on $X$. The \emph{norm} of $\phi \in X^*$ is defined as
@@ -189,14 +203,41 @@ Clearly, stationary points are not necessarily extrema.
 
 \section{Spaces we work with}
 
-\begin{exercise}
+\begin{lemma}
   Put
   $X = C^1\p{[a, b], \R^n}$ and
   $$ \n{f} = \max_{x \in [a, b]} \a{f(x)} + \max_{x \in [a, b]}\a{f'(x)}. $$
   The function $\n{\square} \col X \to \R$ is a norm, and the space $X$ is complete.
-\end{exercise}
+\end{lemma}
 
-\wtf
+{\footnotesize The proof repeats that of the theorem on the completeness of the space of bounded operators (from functional analysis) almost precisely.}
+
+\begin{proof}
+  All the properties of a norm follow trivially from the fact that $\a{\s}$ is a norm.
+  
+  We check completeness. Let $\b{f_n}$ be a Cauchy sequence. Define
+  $$ f \col x \mapsto \lim_{n\to\infty} f_n(x). $$
+  This definition is correct, since $\R$ is complete, and $\b{f_n(x)}$ is a Cauchy sequence for any $x \in [a, b]$.
+  We assert $f_n$ converges uniformly to $f$.
+  Suppose otherwise:
+  $$ \ex \eps > 0\ \fa n_0 \in \N\ \ex n > n_0\ \ex x \in [a, b] \col \a{f_n(x)-f(x)} > \eps. $$
+  Since $\b{f_n}$ is Cauchy,
+  $$ \fa \gd > 0\ \ex n_1 \in \N\ \fa k, l > n_1\ \fa x \in [a, b] \col \a{f_l(x)-f_k(x)} < \gd. $$
+  Fix $\gd > 0$ and take the corresponding $n_1$. There exist $x \in [a, b]$ and $n > n_1$ such that
+  \begin{equation}
+    \label{gee}
+    \a{f_n(x) - f(x)} > \eps.
+  \end{equation}
+  Nevertheless, for all $m > n_1$ we have
+  \begin{align*}
+    \a{f_n(x)-f(x)}
+    &\le \a{f_n(x)-f_m(x)} + \a{f_m(x)-f(x)} \\
+    &\le \gd + \a{f_m(x)-f(x)}.
+  \end{align*}
+  Here, taking $n_1$ large enough, we can make the difference $\a{f_m(x)-f(x)}$ arbitrarily small, since $f$ is the pointwise limit of $\b{f_\s}$. But with $n_1 \to \infty$ we have $\gd \to \infty$ --- a contradiction to \eqref{gee}.
+  
+  Having established that, we are, in fact, done, since the same reasoning can be applied to the pointwise limit of $\b{f'_\s}$. Therefore, $X$ is complete in the specified topology.
+\end{proof}
 
 \begin{definition}
   The norm from the previous exercise we'll call the \emph{standard $C^1$ norm}.
