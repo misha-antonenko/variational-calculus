@@ -521,9 +521,10 @@ Now the formula.
   $$ Y_1 = \b{y \in C^1\p{[a, b], \R^n} \mid y(a)=A,\ y(b)=B}, $$
   where $A, B \in \R^n$.
   Then
-  $$
-  \p{x \mapsto \pd_3 L\p{x, y_0(x), y_0'(x)}}'
-  = \p{ x \mapsto \pd_2 L\p{x,y_0(x),y_0'(x)} } $$
+  \begin{equation}
+    \label{Euler-Langrange}
+    \diff{\frac{\pd L}{\pd y}}_{y=y_0} = \frac{\d}{\d x} \diff{\frac{\pd L}{\pd v}}_{y=y_0}
+  \end{equation}
   (in particular, the derivative on the left exists).
 \end{theorem}
 
@@ -573,3 +574,147 @@ This is a common feature of many variational problems: the optimal function is i
 \end{proof}
 
 {\footnotesize Here two theorems were skipped due to the difficulty in typesetting all the formulas. One of them is concerned with conditions, upon which $y_0 \in C^2$; the other shows that the $\nabla_vL = 0$ at the ends of the interval, when the values of $y$ on them are not fixed.}
+
+Hereon
+\begin{align*}
+  X &= [a, b] \times \R^{2n}, \\
+  Y &= C^1\p{[a, b], \R^{n}}.
+\end{align*}
+
+\begin{theorem}[extrema with ends fixed are $C^2$]
+  Let $L \in C^2(X)$, and
+  $$ \det \p{\frac{\pd^2 L}{\pd v_i \pd v_j}(x,y,v)}_{i,j \in [1, n]} \ne 0 $$
+  for all $(x, y, v) \in X$.
+  Suppose that $y_0$ is a local extremum of $J$ on
+  $$ \b{ y\in Y \mid y(a) = A,\ y(b) = B }. $$
+  Then $y_0 \in C^2\p{[a, b], \R^n}$.
+\end{theorem}
+
+\begin{theorem}[extrema with ends fixed are $C^2$, bis]
+  Let $L \in C^2(X)$, and
+  $$ \det \p{\frac{\pd^2 L}{\pd v_i \pd v_j}(x,y,v)}_{i,j \in [1, n]} \ne 0 $$
+  for all $(x, y, v) \in X$.
+  Suppose that $y_0$ is a local extremum of $J$ on $Y$.
+  Then $y_0 \in C^2\p{[a, b], \R^n}$.
+\end{theorem}
+
+\begin{theorem}
+  Let $L \in C^1(X)$ and let $y_0$ be a local extremum of $J$ on the whole of $Y$. Then
+  \begin{equation}
+    \label{derivatives wrt v at endpoints are 0}
+    \diff{\nabla_v L}_{x=a} = \diff{\nabla_v L}_{x=b} = 0.
+  \end{equation}
+\end{theorem}
+
+\begin{lemma}
+  The equalities \eqref{Euler-Langrange} and \eqref{derivatives wrt v at endpoints are 0} together are equivalent to the $y_0$ being a stationary point of of $J$.
+\end{lemma}
+
+\wtf
+
+\section{Hypersurfaces}
+
+\begin{definition}
+  Let $X$ be a normed space, and $f \in C^1(X)$.
+  A set $M \ss X$ is called a \emph{hypersurface}, iff
+  \begin{align*}
+    f(x) &= 0, &
+    \d f(x) &\ne 0
+  \end{align*}
+  for all $x \in M$.
+  The \emph{tangent space} $T_xM$ at $x \in M$ is the set
+  $$ T_xM = \ker \d f(x). $$
+\end{definition}
+
+\begin{theorem}[tangent space in terms of curves]
+  Suppose $f$ and $M$ are as above, $p \in M$, and $h \in \ker \d f(p)$.
+  Then exists a neighbourhood $U \ss \R$ of 0 and a $C^1$ function $w \col U \to X$ such that
+  \begin{enumerate}
+    \item $w(U) \ss M$.
+    \item $w(0) = 0$.
+    \item $w'(0) = h$.
+  \end{enumerate} 
+\end{theorem}
+
+\begin{proof}
+  Let $v \not \in T_pM$. Introduce
+  $$ g(s, t) := f(p+sv+th). $$
+  Hence
+  $$ \frac{\pd g}{\pd t}(0, 0) = 0. $$
+  By the IFT, there exists $s \col U \to \R$ such that
+  $$ g\p{s(t), t} = 0 $$
+  and
+  $$ s'(t) = -\frac{\pd g / \pd t}{\pd g / \pd s}. $$
+  The last implies
+  $$ s'(0) = 0. $$
+  Put
+  $$ w(t) := p+s(t)v+th. $$
+  Then $w(0) = u$, $f(w(t)) = 0$, $w'(0) = s'(0)v+h = 0$.
+\end{proof}
+
+\section{Conditional extrema in infinite-dimensional spaces}
+
+Let $J, G \in C^1(X)$. Define
+$$ M = \b{ x \in X \mid G(x) = 0, \det \d G(x) \ne 0 }. $$
+
+\begin{lemma}
+  Let $u$ be a local extremum of $J$ on $M$ and $h \in T_uM$.
+  Then $\d J(u; h) = 0.$
+\end{lemma}
+
+\begin{proof}
+  Let again $v \not \in T_uM$.
+  Put
+  $$ w(t) := u+s(t)v+th, $$
+  where
+  $$ s(0)=0, \quad s'(0) = 0. $$
+  Since $u$ is a local extremum of $J$,
+  $$ 0 = \p{J \circ w}'(0) = \d J(u; h). $$
+\end{proof}
+
+\begin{theorem}
+  Let $G, J \in C^1(X)$, and let $u$ be a local extremum of $J$ on $M$.
+  Then exists $\gl \in \R$ such that $u$ is a stationary point of $J+\gl G$.  
+\end{theorem}
+
+\begin{proof}
+  Let $v \not \in \ker \d G(u)$, and
+  $$ \gl = - \frac{\d J(u; v)}{\d G(u; v)}. $$
+  Let $y \in X$, and put
+  $$ h = y - \frac{\d G(u; y)}{\d G(u; v)}. $$
+  By the previous lemma,
+  \begin{align*}
+    0
+    &= \d J(u; h) \\
+    &= \d J(u; y) + \gl \d G(u;y),
+  \end{align*}
+  what was asserted.
+\end{proof}
+
+\section{Lagrange multipliers}
+
+Let $G \in C^1\p{X, \R^n}$, and $J$ and $M$ as before.
+
+\begin{theorem}[on Lagrange multipliers]
+  Let $u$ be a local extremum of $J$ on $M$.
+  Suppose $u$ is a regular value.
+  Then exists $\gl \in \R^n$ (a column of \emph{Lagrange multipliers}) such that
+  $$ \d_u \p{J + \i{\gl, G}} = 0. $$
+\end{theorem}
+
+This section is completely dedicated to the proof, and all lemmas are stated within the context of the theorem.
+
+\begin{lemma}
+  Let $h \in \ker \d G(u)$. Then exists a neighbourhood $U \ss \R$ of 0 and a curve $\gg \in C^1(U, X)$ such that $\im \gg \ss M$, $\gg(0) = u$ and $\gg'(0) = h$.
+\end{lemma}
+
+\begin{lemma}
+  For any $h \in T_uM$,
+  $$ \d J(u; h) = 0. $$
+\end{lemma}
+
+\wtf
+
+\subsection{An electrostatic example}
+
+Let $\Omega \ss \R^3$.
