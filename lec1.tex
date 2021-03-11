@@ -612,7 +612,7 @@ Hereon
 
 \wtf
 
-\section{Hypersurfaces}
+\section{Lagrange multipliers in higher dimensions}
 
 \begin{definition}
   Let $X$ be a normed space, and $f \in C^1(X, \R^n)$.
@@ -623,7 +623,7 @@ Hereon
   $$ T_xM = \ker \d f(x). $$
 \end{definition}
 
-\begin{theorem}[tangent space in terms of curves]
+\begin{lemma}[the tangent space in terms of curves]
   Suppose $f$ and $M$ are as above, $p \in M$, and $h \in \ker \d f(p) \sm \b{0}$.
   Then exists a neighbourhood $U \ss \R$ of 0 and a $C^1$ curve $\gg \col U \to X$ such that
   \begin{enumerate}
@@ -631,14 +631,14 @@ Hereon
     \item $\gg(0) = p$.
     \item $\gg'(0) = h$.
   \end{enumerate} 
-\end{theorem}
+\end{lemma}
 
 \begin{proof}
   Since $\d f(p)$ is surjective, we can find vectors $v_1, \dots, v_n \in X$ such that their $\d f(p)$-images form a basis of $\R^n$. Let $v = (v_1, \dots, v_n)$ be the matrix with them as columns; and, for $s \in \R^n$ and $t \in \R$, put
   $$ g(s, t) := f(p+vs+ht). $$
   Since $h \in \ker \d f(p)$ and $\im v \not \ss \ker \d f(p)$,
   $$ \det \frac{\pd g}{\pd s}(0, 0) \ne 0 , \quad \det \frac{\pd g}{\pd t}(0, 0) = 0. $$
-  By the IFT, there exist $U \ss \R$ and $s \col U \to \R^n$ such that
+  As $g$ is $C^1$, by the IFT, there exist $U \ss \R$ and $s \col U \to \R^n$ such that
   $$ g\p{s(t), t} = 0 $$
   and
   $$ s'(t) = -  \p{\frac{\pd g}{\pd s}}^{-1} \cdot \frac{\pd g}{\pd t}. $$
@@ -649,8 +649,6 @@ Hereon
   Then $\gg(0) = p$, $f\p{\gg(t)} = 0$, $\gg'(0) = h$.
 \end{proof}
 
-\subsection{Conditional extrema in infinite-dimensional spaces}
-
 \begin{lemma}
   Let $p$ be a local extremum of $J|_M$.
   Then $\ker \d f(p) \ss \ker \d J(p).$
@@ -660,61 +658,34 @@ Hereon
   Let $h \in T_pM = \ker \d f(p)$.
   Let $\gg \col U \to X$ be a curve with $\im \gg \ss M$, $\gg(0) = p$ and $\gg'(0) = h$.
   Since $p$ is a local extremum of $J$,
-  $$ 0 = \p{J \circ \gg}'(0) = \d J(p; h). $$
+  $$ 0 = \p{J \circ \gg}'(0) = \d J(h). $$
 \end{proof}
 
-\begin{theorem}
+\begin{theorem}[Lagrange multipliers]
   Let $p$ be a local extremum of $J|_M$.
-  Then exists $\gl \in \R^n$ such that
-  $$ \d_p \p{J+\i{\gl, f}} = 0. $$
+  Then exists $\gl \in \R^{n*}$ (a row of \emph{Lagrange multipliers}) such that
+  $$ \d_p \p{J-\gl f} = 0. $$
 \end{theorem}
 
 \begin{proof}
-  Let $v \not \in \ker \d f(p)$, and
-  $$ \gl = - \frac{\d J(p; v)}{\d f(p; v)}. $$
-  Let $y \in X$ be any, and
-  $$ h = y - \frac{\d f(p; y)}{\d f(p; v)} v. $$
-  By the previous lemma,
+  Let $v$ be as before.
+  To actually find $\gl$, we first take any $y \in X \simeq TX$.
+  Put
+  $$ h = y - v \cdot \p{ \d f \cdot v }^{-1} \cdot \d f \cdot y. $$
+  Observe that $h \in \ker \d f$:
+  \begin{align*}
+    \d f \cdot h
+    &= \d f \cdot y - \d f \cdot v \cdot \p{ \d f \cdot v }^{-1} \cdot \d f \cdot y \\
+    &= \d f \cdot y - \d f \cdot y \\
+    &= 0.
+  \end{align*}
+  Then $h \in \ker \d J$ by the previous lemma.
+  This means that
   \begin{align*}
     0
-    &= \d J(u; h) \\
-    &= \d J(u; y) + \gl \d f(u;y),
+    &= \d J \cdot h \\
+    &= \d J \cdot y \mathrel{-} \ub{\d J \cdot v \cdot \p{\d f \cdot v}^{-1}}_{\gl} \mathrel{\cdot} \d f \cdot y \\
+    &= \p{ \d J - \gl \cdot \d f  } \cdot y.
   \end{align*}
-  what was asserted.
+  Since the coefficient is independent of $y$, we are done.
 \end{proof}
-
-\section{Lagrange multipliers}
-
-Let $G \in C^1\p{X, \R^n}$, and $J$ and $M$ as before.
-
-\begin{theorem}[on Lagrange multipliers]
-  Let $u$ be a local extremum of $J$ on $M$.
-  Suppose $u$ is a regular value.
-  Then exists $\gl \in \R^n$ (a column of \emph{Lagrange multipliers}) such that
-  $$ \d_u \p{J + \i{\gl, G}} = 0. $$
-\end{theorem}
-
-This section is completely dedicated to the proof, and all lemmas are stated within the context of the theorem.
-
-\begin{lemma}
-  Let $h \in \ker \d G(u)$. Then exists a neighbourhood $U \ss \R$ of 0 and a curve $\gg \in C^1(U, X)$ such that $\im \gg \ss M$, $\gg(0) = u$ and $\gg'(0) = h$.
-\end{lemma}
-
-\begin{proof}
-  Follows from the characterisation of $T_xM$ in terms of curves.
-\end{proof}
-
-\begin{lemma}
-  For any $h \in T_uM$,
-  $$ \d J(u; h) = 0. $$
-\end{lemma}
-
-\begin{proof}
-  Follows from a lemma.
-\end{proof}
-
-\wtf
-
-\subsection{An electrostatic example}
-
-Let $\Omega \ss \R^3$.
