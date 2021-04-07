@@ -689,3 +689,218 @@ Hereon
   \end{align*}
   Since the coefficient is independent of $y$, we are done.
 \end{proof}
+
+\subsection{Electrostatic example}
+
+Let $M \ss \R^3$ be a conductor (a 3-manifold).
+We charge it with $q \in \R$.
+This charge distributes itself over $\pd M$.
+Let $\gs(m)$ be the charge density at $m \in M$; in fact, $\gs \in C(\pd M)$.
+It happens so that the potential energy functional
+$$ J(\gs) = \int_{(x, y) \in \p{\pd M}^2} \frac{\gs(x) \gs(y)}{\a{x-y}} $$
+must be minimal on the true charge density $\gs$, and, of course, the charge conservation law is in effect:
+$$ q = \int_{x \in \pd M} \gs(x). $$
+The function $f$ from the theorem takes the form
+$$ f(\gs) = q - \int_{\pd M} \gs. $$
+By the theorem, there is $\gl \in \R$ such that
+$$ \d\p{J-\gl f}\p{\gs; h} = \diff{\frac{\d}{\d \ga}\p{J-\gl f}\p{\gs + \ga h}}_{\ga=0} = 0 $$
+for any $h \in C(\pd M)$.
+After writing this in full and taking the coefficient of $\ga$ (all other die upon differentiating), we get
+$$ \d \p{J-\gl f} \p{\gs; h} = \int_{x \in \pd M}\p{ 2 \int_{y \in \pd M} \frac{\gs(y) \d y}{\a{x-y}} - \gl} \, h(x) \d x. $$
+This holds for all $h$, so
+$$ \int_{y \in \pd M} \frac{\gs(y) \d y}{\a{x-y}} = \gl/2. $$
+
+\subsubsection{Exercises}
+
+\begin{lemma}
+  Let
+  $$ \phi(x) = \int_{\pd M} \frac{\gs(y) \d y}{\a{x-y}}. $$
+  Then $\Delta \phi(x) = 0$ for all $x \in M$.
+\end{lemma}
+
+\begin{lemma}
+  Let $u \in C^2(\ol M)$, $\Delta u = 0$ in $M$ and $u = 0$ on $\pd M$.
+  Then $u \equiv 0$ in $M$.
+\end{lemma}
+
+\begin{lemma}
+  Let $\phi(x)$ be as previously.
+  Suppose $\phi(x) = \gl/2$ for all $x \in \pd M$.
+  Then $\phi(x) = \gl/2$ for all $x \in M$.
+\end{lemma}
+
+\wtf
+
+\section{Isoperimetric problem}
+
+Let $g_1, \dots, g_m \in C^1\p{[a,b] \times \R^{2n}}$.
+Suppose we want to find an extremal function $f \in C^1\p{[a,b], \R^n}$ for $J$ with the following requirements:
+$$ G_i(f) := \int_a^b g_i\p{x, f(x), f'(x)} \d x = 0 $$
+for all $i \in \b{1, \dots, m}$.
+\textbf{If the optimal $f$ is a regular point of $G$},
+there exist Lagrange multipliers $\gl \in {\R^m}^*$ such that
+$$ \d_f \p{J-\gl G}(h) = 0 $$
+for every $h \in X$.
+Define
+$$ F(x, y, v) := L(x, y, v) - \gl g(x, y, v). $$
+
+\begin{theorem}
+  At the optimal $f$,
+  \begin{equation}
+    \frac{\d}{\d x} \frac{\d F}{\d v} = \frac{\d F}{\d y},
+  \end{equation}
+  and at the endpoints $a,b$ we have
+  \begin{equation}
+    \frac{\d F}{\d v} = 0.
+  \end{equation}
+\end{theorem}
+  
+\begin{lemma}
+  If we add the requirements
+  $$ f(a) = A, \qquad f(b) = B, $$
+  the Euler-Lagrange equalities for $F$ still hold:
+  $$ \frac{\d }{\d x} \frac{\d F}{\d v} = \frac{\d F}{\d y}. $$
+\end{lemma}
+
+\section{Integral functionals on curves}
+
+\begin{lemma}
+  The following conditions are equivalent:
+  \begin{enumerate}
+    \item $F(\gl w) = \gl F(w)$ for all $w \in \R^n \sm \b{0}$ and $\gl > 0$.
+    \item $F(w) = \d F(w; w)$ for all $w \in \R^n \sm \b{0}$.
+  \end{enumerate}
+\end{lemma}
+
+\begin{proof}[$1 \Rightarrow 2$]
+  \begin{align*}
+    \d F(w; w)
+    &= \lim_{a \to 0} \frac{F(w+aw)-F(w)}{a} \\
+    &= F(w).
+  \end{align*}
+\end{proof}
+
+\begin{proof}[$2 \Rightarrow 1$]
+  \begin{align*}
+    F(\gl w)
+    &= \gamma 
+  \end{align*}
+\end{proof}
+
+\section{The general form of the first variation}
+
+\begin{definition}
+  $\R_\times := \R \sm \b{0}$.
+\end{definition}
+
+\begin{definition}
+  Let $\gg$ be a curve. The function
+  \begin{align*}
+    \wh F(\gg, x) := \frac{\pd F}{\pd z}\p{\gg, \gg'} - \frac{\d}{\d x} \frac{\pd F}{\pd w} \p{\gg, \gg'}.
+  \end{align*}
+  we'll call the \emph{Euler function}.
+\end{definition}
+
+\begin{theorem}[general form of the first variation]
+  \label{general form of the first variation}
+  Let $F \in C^2 \p{\R^n \times \R^n_\times}$ be homogenous in the last $n$ coordinates.
+  Let $\Gamma \in C^2 \p{[a, b] \times [\ga_1, \ga_2], \R^n}$ be a homotopy of regular curves.
+  For the curve $\ga$, consider
+  $$ \phi(\ga) = \int_{x=a}^b F\p{\Gamma, \Gamma_x'} $$
+  (all gammas are computed at $(x, \ga)$ hereon).
+  Then
+  \begin{align*}
+    \frac{\d \phi(\ga)}{\d \ga}
+    &= \diff{ \i{\frac{\pd F}{\pd w}, \Gamma'_\ga} }_{x=a}^b \\
+    &+\int_{x=a}^b \i{\wh F\p{\Gamma(\s, \ga), x}, \Gamma'_\ga }.
+  \end{align*}
+\end{theorem}
+
+\begin{idea}
+  Integrate by parts.
+\end{idea}
+
+\begin{lemma}
+  Let $F \in C^1 \p{\R^n \times \R^n_\times}$ be homogenous in the last $n$ coordinates.
+  Then, for any $(z_0, w_0) \in \R^n \times \R^n_\times$ and $\gl \in \R_\times$,
+  \begin{align*}
+    \diff{\frac{\pd F(z, w)}{\pd w}}_{(z_0, w_0)} = \diff{\frac{\pd F(z, \gl w)}{\pd w}}_{(z_0, w_0)}.
+  \end{align*} 
+\end{lemma}
+
+\begin{proof}
+  \begin{align*}
+    \gl \diff{\frac{\pd F(z, w)}{\pd w}}_{(z_0, w_0)}
+    &= \diff{\frac{\pd \gl F(z, w)}{\pd w}}_{(z_0, w_0)} \\
+    &= \diff{\frac{\pd F(z, \gl w)}{\pd w}}_{(z_0, w_0)} \\
+    &= \diff{\frac{\pd F(z, \gl w)}{\pd w} \cdot \gl}_{(z_0, w_0)}
+  \end{align*}
+\end{proof}
+
+\begin{lemma}
+  Let $F \in C^1(\dots)$ be as before.
+  Let $\gg_1 \in C^1\p{[a_1, b_1], \R^n}$ and $\gg_2 \in C^2\p{[a_2, b_2]}$ be equivalent curves: $\gg_1 = \gg_2 \circ k$ for $k \in C^1\p{[a_1, b_2], [a_2, b_2]}$ such that $k' > 0$.
+  Then
+  $$ \wh F(\gg_1, \s) = k'(\s) \cdot \wh F\p{\gg_2, k(\s)}. $$ 
+\end{lemma}
+
+\begin{idea}
+  Compute, using the previous lemma.
+\end{idea}
+
+\section{Transversality conditions}
+
+\begin{theorem}[Euler]
+  Let $F \in C^2(\dots)$ be as in the previous theorem, and
+  $$ J(\gg) := \int_{x=a}^b F(\gg, \gg'). $$
+  Let $u, v \in \R^n$.
+  Let $\gg$ be the local extremum of $J$ on the set
+  $$ T = \b{\gg \in C^2\p{[a, b], \R^n} \mid \gg(a) = u,\, \gg(b) = v }. $$
+  Then
+  $$ \wh F(\gg, \s) \equiv 0. $$
+\end{theorem}
+
+\begin{definition}
+  The last equation is called the \emph{Euler equation}.
+  Any $\gg$ that satisfies it is an \emph{admissible extremal}.
+\end{definition}
+
+\begin{remark}
+  By the preceding lemma, the equation does not depend on the parameterisation.  
+\end{remark}
+
+\begin{idea}
+  Consider $\Gamma(x, \ga) := \gg(x) + \ga h(x)$ for some $h(a) = h(b) = 0$; then apply the theorem on page \pageref{general form of the first variation} and Lagrange's lemma.
+\end{idea}
+
+\section{Transversality conditions}
+
+We generalise the Euler's theorem.
+
+\begin{theorem}
+  Let $F \in C^2 \p{\dots}$ and $J$ be as before.
+  Let $M_1$ and $M_2$ be $C^1$ submanifolds in $\R^n$.
+  Let the curve $\gg_0 \in C^2 \p{ [a, b], \R^n}$ be the local extremum of $J$ on
+  $$ T = \b{\gg \in C^2\p{[a, b], \R^n} \mid \gg(a) \in M_1,\, \gg(b) \in M_2 }. $$
+  Then:
+  \begin{enumerate}
+    \item $\wh F(\gg_0, \s) \equiv 0$.
+    \item The \emph{transversality conditions} hold:
+    \begin{align*}
+      \diff{\frac{\pd F}{\pd w}}_{\p{\gg_0(a), \gg_0'(a)}} &\perp T_{\gg_0(a)} M_1, \\
+      \diff{\frac{\pd F}{\pd w}}_{\p{\gg_0(b), \gg_0'(b)}} &\perp T_{\gg_0(b)} M_2.
+    \end{align*}
+  \end{enumerate}
+\end{theorem}
+
+\begin{idea}
+  The first conclusion obviously follows from the Euler's theorem.
+  To prove the second one, consider
+  $$ \Gamma(x, \ga) = \gg_0(x) + \gth(x) \cdot \p{u(\ga)- \gg_0(a)}, $$
+  where $\gth \in C^2$ is a smooth `step' function on $[a, b]$, and the curve $u \col \ss \R \to M_1$ presents any chosen vector $v \in T_{\gg_0(a)}M_1$.
+  Then the result will follow from the general form of the first variation.
+\end{idea}
+
+
+\section{Multidimensional variational problems}
+
