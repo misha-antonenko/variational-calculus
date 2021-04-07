@@ -573,7 +573,8 @@ This is a common feature of many variational problems: the optimal function is i
   is an extremum, satisfies the boundary conditions $\b{y(1) = 1,\ y(0) = -1}$, and $J(y)=0$. Nevertheless, $y_0$ has no second derivative at 0.
 \end{proof}
 
-{\footnotesize Here two theorems were skipped due to the difficulty in typesetting all the formulas. One of them is concerned with conditions, upon which $y_0 \in C^2$; the other shows that the $\nabla_vL = 0$ at the ends of the interval, when the values of $y$ on them are not fixed.}
+{\footnotesize \wtf Here two theorems were skipped due to the difficulty in typesetting all the formulas. One of them is concerned with conditions, upon which $y_0 \in C^2$; the other shows that the $\nabla_vL = 0$ at the ends of the interval, when the values of $y$ on them are not fixed.}
+
 
 Hereon
 \begin{align*}
@@ -636,14 +637,14 @@ Hereon
 \begin{proof}
   Since $\d f(p)$ is surjective, we can find vectors $v_1, \dots, v_n \in X$ such that their $\d f(p)$-images form a basis of $\R^n$. Let $v = (v_1, \dots, v_n)$ be the matrix with them as columns; and, for $s \in \R^n$ and $t \in \R$, put
   $$ g(s, t) := f(p+vs+ht). $$
-  Since $h \in \ker \d f(p)$ and $\im v \not \ss \ker \d f(p)$,
-  $$ \det \frac{\pd g}{\pd s}(0, 0) \ne 0 , \quad \det \frac{\pd g}{\pd t}(0, 0) = 0. $$
-  As $g$ is $C^1$, by the IFT, there exist $U \ss \R$ and $s \col U \to \R^n$ such that
-  $$ g\p{s(t), t} = 0 $$
+  Since $h \in \ker \d f(p)$ and $\d f(p) \cdot v$ is non-degenerate,
+  $$ \det \frac{\pd g}{\pd s}(0, 0) \ne 0 , \quad \frac{\pd g}{\pd t}(0, 0) = 0 \in {\R^n}^*. $$
+  As $g$ is $C^1$, by the IFT, there exist $U \ss \R$ and $s \col U \to \R^n$ such that, for any $t \in U$,
+  $$ g\p{s(t), t} = f(p) = 0, \quad s(0) = 0, $$
   and
-  $$ s'(t) = -  \p{\frac{\pd g}{\pd s}}^{-1} \cdot \frac{\pd g}{\pd t}. $$
+  $$ s'(t) = -  \diff{\p{\frac{\pd g}{\pd s}}^{-1} \cdot \frac{\pd g}{\pd t}}_{\p{s(t), t}} \in {\R^n}^*. $$
   The last implies
-  $$ \det s'(0) = 0. $$
+  $$ s'(0) = 0. $$
   Put
   $$ \gg(t) := p+v \cdot s(t)+ht. $$
   Then $\gg(0) = p$, $f\p{\gg(t)} = 0$, $\gg'(0) = h$.
@@ -663,7 +664,7 @@ Hereon
 
 \begin{theorem}[Lagrange multipliers]
   Let $p$ be a local extremum of $J|_M$.
-  Then exists $\gl \in \R^{n*}$ (a row of \emph{Lagrange multipliers}) such that
+  Then exists $\gl \in {\R^{n}}^*$ (a row of \emph{Lagrange multipliers}) such that
   $$ \d_p \p{J-\gl f} = 0. $$
 \end{theorem}
 
