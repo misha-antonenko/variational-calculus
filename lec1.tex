@@ -476,10 +476,11 @@ Now the formula.
 \begin{proof}[Proof of $1 \Rightarrow 2$.]
   By induction on $k$. The base $k = 1$ is the Dubois-Raymond.
   \begin{align*}
-    \int_a^b gh^{(k)}
-    &= \diff{g'h^{(k-1)}}_a^b - \int_a^b gh^{(k-1)} \\
+    \int_a^b g'h^{(k)}
+    &= \diff{gh^{(k-1)}}_a^b - \int_a^b g'h^{(k-1)} \\
     &= 0.
   \end{align*}
+  Here, the integral is zero by the induction hypothesis.
 \end{proof}
 
 \begin{proof}[Proof of $2 \Rightarrow 1$.]
@@ -489,10 +490,10 @@ Now the formula.
   \begin{align*}
     \int_a^b gh^{(k)}
     &= \diff{gh^{(k-1)}}_a^b - \int_a^b g'h^{(k-1)} \\
-    &= -\int_a^b g'h'.
+    &= -\int_a^b g'h^{(k-1)}.
   \end{align*}
   $h' \in C^{k-1}[a, b]$ is, in fact, any; so the result for this case follows by induction.
-  In the general case, observe that we again can approximate with $C^\infty[a, b]$ functions $g_n \xrightarrow[]{L^1} g$:
+  In the general case, observe that we can approximate with $C^\infty[a, b]$ functions $g_n \xrightarrow[]{L^1} g$:
   \begin{align*}
     \a{\int_a^b \p{g-g_n} h^{(k)}}
     &\le \int_a^b \a{g-g_n} \a{h^{(k)}} \\
@@ -905,3 +906,140 @@ We generalise the Euler's theorem.
 
 \section{Multidimensional variational problems}
 
+Let $\Omega \ss \R^k$ have $C^1$ boundary, and $u \col \Cl \Omega \to \R^n$ be a $C^1$ function. Consider
+$$ J(u) = \int_{\Omega} L\p{x, u(x), u'(x)}, $$
+where $L \col \Cl \Omega \times \R^n \times \R^{kn} \to \R$.
+We thus operate on the space $X = C^1 \p{\Cl \Omega, \R^n}$.
+Define
+$$ (w_{ij}) := u'(x) $$
+and
+$$ \n{u}_X = \sum_{i=1}^n \p{ \max \a{u_i(x)} + \max \a{\nabla u_i(x)} }. $$
+This is indeed a norm. By analogy with the paragraph, if $L$ is continuous, then $J$ is; likewise, if $L$ is $C^1$, then $J$ is.
+We can differentiate $J$:
+\begin{align*}
+  \d J(u; h)
+  &= \int_{\Omega} \p{
+    \sum_{i=1}^n \frac{\pd L}{\pd u_i} \cdot h_i
+    + \ub{\sum_{i=1}^n \sum_{j=1}^k \frac{\pd L}{\pd w_{ij}}
+      \frac{\pd h_i}{\pd x_j}}_{\frac{\pd L}{\pd w} \cdot \frac{\d h}{\d x}}
+  } \d x.
+\end{align*}
+
+\begin{lemma}
+  Let $f, g \in C^1\p{\Cl \Omega}$ and $\pd \Omega \in C^1$.
+  Then
+  $$ \int_\Omega f \cdot \frac{\pd g}{\pd x_j} \d x
+ + \int_\Omega \frac{\pd f}{\pd x_j} \cdot g \d x
+  = \int_{\pd \Omega} f \cdot g \cdot \nu_j \d S_{k-1}(y),
+  $$
+  where $\nu(y)$ is the unit outward normal at $y \in \pd \Omega$.
+\end{lemma}
+
+\wtf
+
+\newcommand{\Div}[0]{\on{Div}}
+
+\begin{lemma}[Ostrogradsky--Gauss formula]
+  Let $u \in C^1\p{\Cl \Omega, \R^k}$.
+  Then
+  $$ \int_{\Omega} \Div\p{u(x)} \d x = \int_{\pd \Omega} \i{u, \nu} \d S_{k-1}. $$
+\end{lemma}
+
+\section{Euler-Ostrogradsky equations}
+
+\begin{theorem}[Euler-Ostrogradsky equations]
+  Let $\phi \in C\p{\pd \Omega}$.
+  Let $u_0$ be a local extremum of $J$ on
+  $$ \b{ u \in X \mid u|_{\pd \Omega} = \phi }. $$
+  Suppose $u_0 \in C^2$.
+  Then
+  \begin{align*}
+    \diff{\frac{\pd L}{\pd u_i}}_{u_0}
+    &= \sum_{j=1}^k \diff { \frac{\pd}{\pd x_j} \frac{\pd L}{\pd w_{ij}} }_{u_0}.
+  \end{align*}
+\end{theorem}
+
+\begin{proof}
+  Assume $\phi \equiv 0$.
+  We follow an already established (in the first sections) pipeline.
+  Let $h \in C^1\p{\Cl \Omega, \R^n}$ be such that $h_{\pd \Omega} = 0$. Then $a = 0$ is a local extremum of $\phi(a) = J(u_0+ah)$.
+  Then $\d J(u_0; h) = 0$.
+  This rewrites as
+  \begin{align*}
+    0
+    &= \d J(u_0; h) \\
+    &= \sum_{i=1}^n \int_\Omega
+    \p{ \frac{\pd L}{\pd u_i} h_i +
+       \sum_{j=1}^k \frac{\pd L}{\pd w_{ij}} \frac{\pd h_i}{\pd x_j} } \d x.
+  \end{align*}
+  (We have already given this expression above.)
+  Integrating by parts, we get
+  \begin{align*}
+    \int_\Omega \frac{\pd L}{\pd w_{ij}} \frac{\pd h_i}{\pd x_j} \d x
+    &= - \int_\Omega \frac{\pd}{\pd x_j} \frac{\pd L}{\pd w_{ij}} h_i \d x
+  \end{align*}
+  (we integrate over a single $j$th coordinate, and the restriction of $h$ to the boundary is zero).
+  Therefore, the previous integral is
+  \begin{align*}
+    \sum_{i=1}^n \int_\Omega
+    \p{ \frac{\pd L}{\pd u_i} -
+       \sum_{j=1}^k \frac{\pd}{\pd x_j} \frac{\pd L}{\pd w_{ij}} } h_i  \d x.
+  \end{align*}
+  And so for all such $h$.
+  Thus the integrand is zero, as desired.
+\end{proof}
+
+\subsection{The case of no boundary conditions}
+
+Also \emph{natural} boundary conditions.
+
+\begin{theorem}
+  Let $u_0$ be a local extremum of $J$ on the whole of $X$.
+  Let $\nu$ be the unit outward normal to $\pd \Omega$.
+  Then
+  \begin{align*}
+    \sum_{j=1}^k \frac{\pd L}{\pd w_{ij}} \cdot \nu_j(x) = 0
+  \end{align*}
+  for all $x \in \pd \Omega$.
+\end{theorem}
+
+\begin{proof}
+  Like in the previous theorem, we integrate by parts, but the second condition won't disappear.
+  \begin{align*}
+    \sum_{i=1}^n \int_\Omega \p{ \frac{\pd L}{\pd u_i} - \sum_{j=1}^k \frac{\pd}{\pd x_j} \frac{\pd L}{\pd w_{ij}} } h_i \d x + \int_{\pd \Omega} \sum_{i=1}^n h_i \sum_{j=1}6k \frac{\pd L}{\pd w_{ij}} \nu_j \d S(x). 
+  \end{align*}
+  The first addend is zero by the previous theorem. Applying Lagrange's lemma to the second one, we get the desired.
+\end{proof}
+
+\begin{remark}
+  The theory of Lagrange multipliers can also be generalised to the multidimensional case; namely, if we have some $m$ conditions of form
+  $$ \int_\Omega G_i(x, u, u') \d x = 0 $$
+  (where $i \in \b{1, \dots, m}$), we get $m$ Lagrange multipliers, which give rise to the function $F$ (as previously); then we may apply the theorems above to this function.
+\end{remark}
+
+\begin{example}
+  Let $n = 1$ and $\Omega \ss \R^k$.
+  Let $f \in C(\ol \Omega)$ and $L(x, u, w) = \a{w}^2/2 - f(x)u$.
+  Then
+  \begin{align*}
+    \frac{\pd L}{\pd u} &= -f(x), &
+    \frac{\pd L}{\pd w_{j}} &= w_{j} = \frac{\pd u}{\pd x_j},
+  \end{align*} 
+  and the Euler-Ostrogradsky equations for some extremal $u_0$ rewrite as
+  \begin{align*}
+    -f(x)
+    &= \frac{\pd L}{\pd u} \\
+    &= \sum_{j=1}^k \frac{\pd}{\pd x_j} \frac{\pd L}{\pd w_j} \\
+    &= \sum_{j=1}^k \frac{\pd^2 u_0}{\p{\pd x_j}^2}.
+  \end{align*}
+  If the boundary condition $\phi$ is given,
+  \begin{align*}
+    \sum_{j=1}^k \frac{\pd^2 u_0}{\p{\pd x_j}^2}
+    &= \Delta u_0 \\
+    &= -f,
+  \end{align*}
+  and
+  \begin{align*}
+    u_0|_{\pd \Omega} = \phi.
+  \end{align*}
+\end{example}
