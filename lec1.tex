@@ -462,7 +462,7 @@ Now the formula.
 \subsubsection{A generalisation}
 
 \begin{lemma}[Dubois-Raymond extended]
-  Let $g \in L^1\q{a,b}$, $k \in \N$.
+  Let $g \in C^k\q{a,b}$, $k \in \N$.
   Equivalent are
   \begin{enumerate}
     \item $g$ is a polynomial of degree $k-1$.
@@ -476,7 +476,7 @@ Now the formula.
 \begin{proof}[Proof of $1 \Rightarrow 2$.]
   By induction on $k$. The base $k = 1$ is the Dubois-Raymond.
   \begin{align*}
-    \int_a^b g'h^{(k)}
+    \int_a^b gh^{(k)}
     &= \diff{gh^{(k-1)}}_a^b - \int_a^b g'h^{(k-1)} \\
     &= 0.
   \end{align*}
@@ -492,14 +492,14 @@ Now the formula.
     &= \diff{gh^{(k-1)}}_a^b - \int_a^b g'h^{(k-1)} \\
     &= -\int_a^b g'h^{(k-1)}.
   \end{align*}
-  $h' \in C^{k-1}[a, b]$ is, in fact, any; so the result for this case follows by induction.
-  In the general case, observe that we can approximate with $C^\infty[a, b]$ functions $g_n \xrightarrow[]{L^1} g$:
-  \begin{align*}
-    \a{\int_a^b \p{g-g_n} h^{(k)}}
-    &\le \int_a^b \a{g-g_n} \a{h^{(k)}} \\
-    &\le \max_{[a, b]} \a{h^{(k)}} \cdot \int_a^b \a{g-g_n} \\
-    &\xrightarrow[n \to \infty]{} 0.
-  \end{align*}
+  $h^{(k-1)} \in C^{k-1}[a, b]$ is, in fact, any; so the result for this case follows by induction.
+%  In the general case, observe that we can approximate with $C^\infty[a, b]$ functions $g_n \xrightarrow[]{L^1} g$:
+%  \begin{align*}
+%    \a{\int_a^b \p{g-g_n} h^{(k)}}
+%    &\le \int_a^b \a{g-g_n} \a{h^{(k)}} \\
+%    &\le \max_{[a, b]} \a{h^{(k)}} \cdot \int_a^b \a{g-g_n} \\
+%    &\xrightarrow[n \to \infty]{} 0.
+%  \end{align*}
 \end{proof}
 
 \begin{lemma}
